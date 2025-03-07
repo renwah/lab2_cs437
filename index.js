@@ -20,7 +20,6 @@ function update_data() {
 
                 document.getElementById("speed").innerText = sensorData.speed;
                 document.getElementById("distance").innerText = sensorData.distance;
-                document.getElementById("direction").innerText = sensorData.direction;
 
                 console.log("Received data:", sensorData);
             } catch (error) {
