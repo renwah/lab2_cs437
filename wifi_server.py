@@ -19,12 +19,22 @@ def generate_sensor_data():
 def control_car(command):
     if command == "87":  # 'w' - Move forward
         px.forward(50)  # Adjust speed as needed
+        time.sleep(1)  # Drive for 1 second
+        px.stop()
     elif command == "83":  # 's' - Move backward
         px.backward(50)
+        time.sleep(1)
+        px.stop()
     elif command == "65":  # 'a' - Turn left
         px.set_dir_servo_angle(-30)
+        time.sleep(1)
+        px.set_dir_servo_angle(0)  # Reset steering
+        px.stop()
     elif command == "68":  # 'd' - Turn right
         px.set_dir_servo_angle(30)
+        time.sleep(1)
+        px.set_dir_servo_angle(0)  # Reset steering
+        px.stop()
     elif command == "STOP":  # Stop command
         px.stop()
     else:
