@@ -20,6 +20,7 @@ function update_data() {
 
                 document.getElementById("speed").innerText = sensorData.speed;
                 document.getElementById("distance").innerText = sensorData.distance;
+                document.getElementById("direction").innerText = sensorData.direction;
 
                 console.log("Received data:", sensorData);
             } catch (error) {
@@ -49,7 +50,8 @@ function send_data(input) {
     });
 
     client.on('data', (data) => {
-        document.getElementById("bluetooth").innerHTML = data;
+        //document.getElementById("bluetooth").innerHTML = data;
+        document.getElementById("direction").innerHTML = data;
         console.log(data.toString());
         client.end();
         client.destroy();
