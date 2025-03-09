@@ -6,6 +6,9 @@ from picarx import Picarx
 HOST = "192.168.3.49"  # IP address of your Raspberry Pi
 PORT = 65432           # Port to listen on (non-privileged ports are > 1023)
 px = Picarx()
+distance = 0
+direction = ""
+direction_dict = {"87": "forward", "83": "backwards", "65":"left", "68":"right", "STOP":"not moving"}
 
 # Simulate data (speed, distance, direction)
 def generate_sensor_data():
