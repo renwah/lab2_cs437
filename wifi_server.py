@@ -29,12 +29,10 @@ def control_car(command):
         px.set_dir_servo_angle(-30)
         time.sleep(1)
         px.set_dir_servo_angle(0)  # Reset steering
-        px.stop()
     elif command == "68":  # 'd' - Turn right
         px.set_dir_servo_angle(30)
         time.sleep(1)
         px.set_dir_servo_angle(0)  # Reset steering
-        px.stop()
     elif command == "STOP":  # Stop command
         px.stop()
     else:
@@ -50,25 +48,24 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         try:
             client, client_info = s.accept()
             print(f"Server connected to: {client_info}")
-            with client:
-                while True:
-                    data = client.recv(1024)
-                    if data:
-                        message = data.decode("utf-8").strip()
-                        print(f"Received from client: {message}")
+            data = client.recv(1024)
+            if data:
+                message = data.decode("utf-8").strip()
+                print(f"Received from client: {message}")
 
-                        if message == "GET_SENSOR_DATA":
-                            # Send simulated sensor data as JSON
-                            sensor_data = generate_sensor_data()
-                            client.sendall(json.dumps(sensor_data).encode())  # Send back JSON-encoded data
-                        elif message in ["87", "83", "65", "68", "STOP"]:  # Only valid movement commands
-                            control_car(message)  # Move the PiCar-X
-                        else:
-                            print("Ignoring unknown message.")  # Ignore random messages
-                    else:
-                        print(f"Connection lost with {client_info}")
-                        break  # Exit loop on disconnect
+                if message == "GET_SENSOR_DATA":
+                # Send simulated sensor data as JSON
+                    sensor_data = generate_sensor_data()
+                    client.sendall(json.dumps(sensor_data).encode())  # Send back JSON-encoded data
+                elif message in ["87", "83", "65", "68", "STOP"]:  # Only valid movement commands
+                    control_car(message)  # Move the PiCar-X
+                else:
+                    print(message)  # Ignore random messages
+            else:
+                print(f"Connection lost with {client_info}")
+                break  # Exit loop on disconnect
         except Exception as e:
             print(f"An error occurred: {e}")
             break  # Exit the server loop if there is any exception
+    s.close()
     print("Server shutting down.")
