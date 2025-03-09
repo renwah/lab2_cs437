@@ -6,17 +6,19 @@ from picarx import Picarx
 HOST = "192.168.1.89"  # IP address of your Raspberry Pi
 PORT = 65432           # Port to listen on (non-privileged ports are > 1023)
 px = Picarx()
-distance = 0
-direction = ""
+traveled = 0
+direction = "Start Moving!"
 direction_dict = {"87": "forward", "83": "backwards", "65":"left", "68":"right", "STOP":"not moving"}
 
 # Simulate data (speed, distance, direction)
-def generate_sensor_data():
+def generate_sensor_data(traveled, direction):
     # Generate some dummy data for testing
     return {
-        "speed": "Need to Fix.",  
+        "speed": traveled,  
         "distance": px.ultrasonic.read(),
+        "direction": direction,
     }
+
 
 # Function to control PiCar-X movement
 def control_car(command):
@@ -68,9 +70,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
                 if message == "GET_SENSOR_DATA":
                 # Send simulated sensor data as JSON
-                    sensor_data = generate_sensor_data()
+                    sensor_data = generate_sensor_data(traveled, direction)
                     client.sendall(json.dumps(sensor_data).encode())  # Send back JSON-encoded data
                 elif message in ["87", "83", "65", "68", "STOP"]:  # Only valid movement commands
+                    
+                    direction = direction_dict[message]
+
+                    if message != "STOP":
+                        traveled += 5 
+
                     control_car(message)  # Move the PiCar-X
                 else:
                     print(message)  # Ignore random messages
