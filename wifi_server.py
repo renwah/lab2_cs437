@@ -3,7 +3,7 @@ import time
 import json
 from picarx import Picarx
 
-HOST = "192.168.3.49"  # IP address of your Raspberry Pi
+HOST = "192.168.1.89"  # IP address of your Raspberry Pi
 PORT = 65432           # Port to listen on (non-privileged ports are > 1023)
 px = Picarx()
 distance = 0
