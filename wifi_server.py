@@ -64,6 +64,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             else:
                 print(f"Connection lost with {client_info}")
                 break  # Exit loop on disconnect
+            client.close()
         except Exception as e:
             print(f"An error occurred: {e}")
             break  # Exit the server loop if there is any exception
