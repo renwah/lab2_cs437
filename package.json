@@ -9,8 +9,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Adapted from https://github.com/mccaesar/iot-labs/tree/master/iot-lab-2",
   "dependencies": {
     "electron": "^34.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renwah/lab2_cs437.git"
+  },
+  "bugs": {
+    "url": "https://github.com/renwah/lab2_cs437/issues"
+  },
+  "homepage": "https://github.com/renwah/lab2_cs437#readme"
 }
